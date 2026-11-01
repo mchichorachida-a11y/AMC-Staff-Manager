@@ -5,65 +5,73 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AMC NETWORK | Staff Portal</title>
+
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
+ margin:0;background:#090811;color:white;
  font-family:Arial,sans-serif;
- background:#090811;
- color:white;
- text-align:center;
 }
 header{
- padding:45px 15px;
+ text-align:center;padding:45px 15px;
  background:linear-gradient(135deg,#190b35,#351078,#100b20);
  border-bottom:1px solid #7540bd;
 }
 .logo{font-size:32px;font-weight:900;color:#c69aff}
 header p{color:#c4b5d9}
-.container{max-width:950px;margin:35px auto;padding:15px}
-h2{color:#c69aff}
+.container{max-width:1000px;margin:auto;padding:30px 15px}
+h2{text-align:center}
+.english h2{color:#c69aff}
 .roles{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:15px;
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:14px;margin-top:25px;
 }
 .card{
- background:#171322;
- border:1px solid #392754;
- border-radius:14px;
- padding:23px 10px;
- cursor:pointer;
- transition:.25s;
+ background:#171322;border:1px solid #51316f;
+ border-radius:13px;padding:22px 10px;
+ text-align:center;cursor:pointer;transition:.25s;
 }
 .card:hover{
  transform:translateY(-5px);
- border-color:#b47aff;
- box-shadow:0 5px 25px #7435aa55;
+ border-color:#c69aff;
+ box-shadow:0 5px 20px #8c45c555;
 }
 .card h3{color:#c69aff;margin:0}
 .card p{font-size:12px;color:#aaa}
-#details{
- display:none;
- margin-top:25px;
- padding:25px;
- background:#171322;
- border:1px solid #8146c0;
- border-radius:15px;
- text-align:left;
- animation:show .3s ease;
+.details{
+ display:none;margin-top:22px;padding:22px;
+ border:1px solid #8651bd;background:#171322;
+ border-radius:14px;animation:show .3s;
 }
-#details h2{text-align:center}
-li{margin:13px 0;color:#ddd}
+.details h3{color:#c69aff}
+.details li{margin:14px 0;color:#ddd}
 button{
- background:#8146c0;
- color:white;
- border:0;
- padding:11px 20px;
- border-radius:8px;
+ background:#8245bd;color:white;border:0;
+ padding:11px 20px;border-radius:8px;
  cursor:pointer;
 }
-footer{padding:30px;color:#777;font-size:12px}
+.arabic{
+ direction:rtl;
+ background:#080f1d;
+ border-top:3px solid #168ed0;
+ padding-top:35px;padding-bottom:50px;
+}
+.arabic h2{color:#48baff}
+.arabic .card{
+ background:#101e30;border-color:#174c72;
+}
+.arabic .card h3{color:#55bdff}
+.arabic .card:hover{
+ border-color:#55bdff;
+ box-shadow:0 5px 20px #168ed055;
+}
+.arabic .details{
+ background:#101e30;border-color:#168ed0;
+ text-align:right;
+}
+.arabic .details h3{color:#55bdff}
+.arabic button{background:#087bb9}
+footer{text-align:center;padding:25px;color:#777}
 @keyframes show{
  from{opacity:0;transform:translateY(10px)}
  to{opacity:1;transform:translateY(0)}
@@ -73,109 +81,209 @@ footer{padding:30px;color:#777;font-size:12px}
 }
 </style>
 </head>
+
 <body>
 
 <header>
  <div class="logo">AMC NETWORK</div>
  <p>STAFF TASKS & RESPONSIBILITIES</p>
+ <p>Official Staff Portal</p>
 </header>
 
-<div class="container">
- <h2>Administrative Roles</h2>
- <p style="color:#aaa">Select a role to view its responsibilities</p>
-
- <div class="roles" id="roles"></div>
-
- <div id="details">
-  <h2 id="roleName"></h2>
-  <h3>Responsibilities</h3>
-  <ul id="tasks"></ul>
-  <button onclick="closeDetails()">Close</button>
+<!-- ENGLISH SECTION -->
+<section class="container english">
+ <h2>English Version</h2>
+ <p style="text-align:center;color:#aaa">
+ Select a role to view its responsibilities
+ </p>
+ <div class="roles" id="enRoles"></div>
+ <div class="details" id="enDetails">
+  <h3 id="enName"></h3>
+  <ul id="enTasks"></ul>
+  <button onclick="closeBox('enDetails')">Close</button>
  </div>
-</div>
+</section>
+
+<!-- ARABIC SECTION -->
+<section class="arabic">
+ <div class="container">
+  <h2>النسخة العربية</h2>
+  <p style="text-align:center;color:#9abbd3">
+  اختر الرتبة الإدارية للاطلاع على مهامها ومسؤولياتها
+  </p>
+  <div class="roles" id="arRoles"></div>
+  <div class="details" id="arDetails">
+   <h3 id="arName"></h3>
+   <ul id="arTasks"></ul>
+   <button onclick="closeBox('arDetails')">إغلاق</button>
+  </div>
+ </div>
+</section>
 
 <footer>
  AMC NETWORK © 2026 | Staff Portal
 </footer>
 
 <script>
-const data = {
- "Owner":[
- "Full control of the Discord server.",
- "Make final administrative decisions.",
- "Manage the entire staff team.",
- "Set the server's goals and rules."
- ],
- "Co-Owner":[
- "Assist the Owner.",
- "Supervise administrative operations.",
- "Help manage the staff team.",
- "Handle important issues."
- ],
- "CEO":[
- "Oversee server operations.",
- "Coordinate with management.",
- "Monitor staff performance.",
- "Suggest improvements."
- ],
- "Manager":[
- "Organize staff activities.",
- "Assign and follow up on tasks.",
- "Manage staff communication.",
- "Report problems to higher management."
- ],
- "Admin":[
- "Manage server channels and roles.",
- "Handle serious member violations.",
- "Review staff reports.",
- "Maintain server organization."
- ],
- "Head-Mod":[
- "Supervise the moderation team.",
- "Review moderator actions.",
- "Handle difficult reports.",
- "Guide and support moderators."
- ],
- "Mod":[
- "Monitor text and voice channels.",
- "Enforce server rules.",
- "Handle warnings and punishments.",
- "Report serious incidents."
- ],
- "Helper":[
- "Welcome new members.",
- "Answer member questions.",
- "Help members with problems.",
- "Direct reports to the correct staff."
- ]
-};
+const staff = [
+{
+en:"Owner", ar:"المالك",
+enTasks:[
+"Full control of the Discord server.",
+"Make final administrative decisions.",
+"Manage the entire staff team.",
+"Set the server's goals and rules."
+],
+arTasks:[
+"الإشراف الكامل على خادم ديسكورد.",
+"اتخاذ القرارات الإدارية النهائية.",
+"إدارة فريق العمل بالكامل.",
+"تحديد أهداف الخادم وقوانينه."
+]
+},
+{
+en:"Co-Owner", ar:"نائب المالك",
+enTasks:[
+"Assist the Owner.",
+"Supervise administrative operations.",
+"Help manage the staff team.",
+"Handle important issues."
+],
+arTasks:[
+"مساعدة المالك في إدارة الخادم.",
+"الإشراف على العمليات الإدارية.",
+"المساهمة في إدارة فريق العمل.",
+"التعامل مع القضايا المهمة."
+]
+},
+{
+en:"CEO", ar:"الرئيس التنفيذي",
+enTasks:[
+"Oversee server operations.",
+"Coordinate with management.",
+"Monitor staff performance.",
+"Suggest improvements."
+],
+arTasks:[
+"الإشراف على سير العمل في الخادم.",
+"التنسيق مع الإدارة.",
+"متابعة أداء أعضاء الطاقم.",
+"اقتراح التحسينات والتطويرات."
+]
+},
+{
+en:"Manager", ar:"المدير",
+enTasks:[
+"Organize staff activities.",
+"Assign and follow up on tasks.",
+"Manage staff communication.",
+"Report problems to higher management."
+],
+arTasks:[
+"تنظيم أنشطة فريق العمل.",
+"توزيع المهام ومتابعة تنفيذها.",
+"تنظيم التواصل بين أعضاء الطاقم.",
+"رفع المشاكل إلى الإدارة العليا."
+]
+},
+{
+en:"Admin", ar:"المشرف الإداري",
+enTasks:[
+"Manage server channels and roles.",
+"Handle serious member violations.",
+"Review staff reports.",
+"Maintain server organization."
+],
+arTasks:[
+"إدارة القنوات والرتب.",
+"التعامل مع المخالفات الخطيرة.",
+"مراجعة تقارير فريق العمل.",
+"الحفاظ على تنظيم الخادم."
+]
+},
+{
+en:"Head-Mod", ar:"رئيس المراقبين",
+enTasks:[
+"Supervise the moderation team.",
+"Review moderator actions.",
+"Handle difficult reports.",
+"Guide and support moderators."
+],
+arTasks:[
+"الإشراف على فريق المراقبين.",
+"مراجعة إجراءات المراقبين.",
+"التعامل مع الشكاوى الصعبة.",
+"توجيه المراقبين ومساعدتهم."
+]
+},
+{
+en:"Mod", ar:"مراقب",
+enTasks:[
+"Monitor text and voice channels.",
+"Enforce server rules.",
+"Handle warnings and punishments.",
+"Report serious incidents."
+],
+arTasks:[
+"مراقبة القنوات الكتابية والصوتية.",
+"تطبيق قوانين الخادم.",
+"التعامل مع التحذيرات والعقوبات.",
+"الإبلاغ عن المخالفات الخطيرة."
+]
+},
+{
+en:"Helper", ar:"مساعد",
+enTasks:[
+"Welcome new members.",
+"Answer member questions.",
+"Help members with problems.",
+"Direct reports to the correct staff."
+],
+arTasks:[
+"الترحيب بالأعضاء الجدد.",
+"الإجابة عن أسئلة الأعضاء.",
+"مساعدة الأعضاء في حل مشاكلهم.",
+"توجيه الشكاوى إلى المسؤول المختص."
+]
+}
+];
 
-const roles = document.getElementById("roles");
+function createCards(target, language){
+ const area=document.getElementById(target);
+ staff.forEach((person,index)=>{
+  const card=document.createElement("div");
+  card.className="card";
+  const name=language==="en"?person.en:person.ar;
+  card.innerHTML=`<h3>${name}</h3><p>${language==="en"?"View Responsibilities →":"عرض المهام ←"}</p>`;
+  card.onclick=()=>showDetails(index,language);
+  area.appendChild(card);
+ });
+}
 
-Object.keys(data).forEach(role=>{
- const card=document.createElement("div");
- card.className="card";
- card.innerHTML=`<h3>${role}</h3><p>View Responsibilities →</p>`;
- card.onclick=()=>showDetails(role);
- roles.appendChild(card);
-});
-
-function showDetails(role){
- document.getElementById("roleName").textContent=role;
- const tasks=document.getElementById("tasks");
- tasks.innerHTML="";
- data[role].forEach(task=>{
+function showDetails(index,language){
+ const person=staff[index];
+ const prefix=language==="en"?"en":"ar";
+ document.getElementById(prefix+"Name").textContent=
+ language==="en"?person.en:person.ar;
+ const list=document.getElementById(prefix+"Tasks");
+ list.innerHTML="";
+ const tasks=language==="en"?person.enTasks:person.arTasks;
+ tasks.forEach(task=>{
   const li=document.createElement("li");
   li.textContent=task;
-  tasks.appendChild(li);
+  list.appendChild(li);
  });
- document.getElementById("details").style.display="block";
- document.getElementById("details").scrollIntoView({behavior:"smooth"});
+ const box=document.getElementById(prefix+"Details");
+ box.style.display="block";
+ box.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 
-function closeDetails(){
- document.getElementById("details").style.display="none";
+function closeBox(id){
+ document.getElementById(id).style.display="none";
 }
+
+createCards("enRoles","en");
+createCards("arRoles","ar");
 </script>
 </body>
 </html>
