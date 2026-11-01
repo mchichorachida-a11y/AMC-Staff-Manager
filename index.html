@@ -1,13 +1,181 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMC NETWORK | Staff Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMC NETWORK | Staff Portal</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#090811;
+ color:white;
+ text-align:center;
+}
+header{
+ padding:45px 15px;
+ background:linear-gradient(135deg,#190b35,#351078,#100b20);
+ border-bottom:1px solid #7540bd;
+}
+.logo{font-size:32px;font-weight:900;color:#c69aff}
+header p{color:#c4b5d9}
+.container{max-width:950px;margin:35px auto;padding:15px}
+h2{color:#c69aff}
+.roles{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:15px;
+}
+.card{
+ background:#171322;
+ border:1px solid #392754;
+ border-radius:14px;
+ padding:23px 10px;
+ cursor:pointer;
+ transition:.25s;
+}
+.card:hover{
+ transform:translateY(-5px);
+ border-color:#b47aff;
+ box-shadow:0 5px 25px #7435aa55;
+}
+.card h3{color:#c69aff;margin:0}
+.card p{font-size:12px;color:#aaa}
+#details{
+ display:none;
+ margin-top:25px;
+ padding:25px;
+ background:#171322;
+ border:1px solid #8146c0;
+ border-radius:15px;
+ text-align:left;
+ animation:show .3s ease;
+}
+#details h2{text-align:center}
+li{margin:13px 0;color:#ddd}
+button{
+ background:#8146c0;
+ color:white;
+ border:0;
+ padding:11px 20px;
+ border-radius:8px;
+ cursor:pointer;
+}
+footer{padding:30px;color:#777;font-size:12px}
+@keyframes show{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@media(min-width:650px){
+ .roles{grid-template-columns:repeat(4,1fr)}
+}
+</style>
 </head>
 <body>
-    <h1>AMC NETWORK</h1>
-    <h2>Staff Tasks Portal</h2>
-    <p>Choose your administrative role</p>
+
+<header>
+ <div class="logo">AMC NETWORK</div>
+ <p>STAFF TASKS & RESPONSIBILITIES</p>
+</header>
+
+<div class="container">
+ <h2>Administrative Roles</h2>
+ <p style="color:#aaa">Select a role to view its responsibilities</p>
+
+ <div class="roles" id="roles"></div>
+
+ <div id="details">
+  <h2 id="roleName"></h2>
+  <h3>Responsibilities</h3>
+  <ul id="tasks"></ul>
+  <button onclick="closeDetails()">Close</button>
+ </div>
+</div>
+
+<footer>
+ AMC NETWORK © 2026 | Staff Portal
+</footer>
+
+<script>
+const data = {
+ "Owner":[
+ "Full control of the Discord server.",
+ "Make final administrative decisions.",
+ "Manage the entire staff team.",
+ "Set the server's goals and rules."
+ ],
+ "Co-Owner":[
+ "Assist the Owner.",
+ "Supervise administrative operations.",
+ "Help manage the staff team.",
+ "Handle important issues."
+ ],
+ "CEO":[
+ "Oversee server operations.",
+ "Coordinate with management.",
+ "Monitor staff performance.",
+ "Suggest improvements."
+ ],
+ "Manager":[
+ "Organize staff activities.",
+ "Assign and follow up on tasks.",
+ "Manage staff communication.",
+ "Report problems to higher management."
+ ],
+ "Admin":[
+ "Manage server channels and roles.",
+ "Handle serious member violations.",
+ "Review staff reports.",
+ "Maintain server organization."
+ ],
+ "Head-Mod":[
+ "Supervise the moderation team.",
+ "Review moderator actions.",
+ "Handle difficult reports.",
+ "Guide and support moderators."
+ ],
+ "Mod":[
+ "Monitor text and voice channels.",
+ "Enforce server rules.",
+ "Handle warnings and punishments.",
+ "Report serious incidents."
+ ],
+ "Helper":[
+ "Welcome new members.",
+ "Answer member questions.",
+ "Help members with problems.",
+ "Direct reports to the correct staff."
+ ]
+};
+
+const roles = document.getElementById("roles");
+
+Object.keys(data).forEach(role=>{
+ const card=document.createElement("div");
+ card.className="card";
+ card.innerHTML=`<h3>${role}</h3><p>View Responsibilities →</p>`;
+ card.onclick=()=>showDetails(role);
+ roles.appendChild(card);
+});
+
+function showDetails(role){
+ document.getElementById("roleName").textContent=role;
+ const tasks=document.getElementById("tasks");
+ tasks.innerHTML="";
+ data[role].forEach(task=>{
+  const li=document.createElement("li");
+  li.textContent=task;
+  tasks.appendChild(li);
+ });
+ document.getElementById("details").style.display="block";
+ document.getElementById("details").scrollIntoView({behavior:"smooth"});
+}
+
+function closeDetails(){
+ document.getElementById("details").style.display="none";
+}
+</script>
 </body>
 </html>
