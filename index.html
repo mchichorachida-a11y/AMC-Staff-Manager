@@ -105,6 +105,23 @@ footer{text-align:center;padding:25px;color:#777}
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
  }
+ .stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 70% 60%, #FACC15, transparent),
+    radial-gradient(2px 2px at 40% 80%, white, transparent),
+    radial-gradient(2px 2px at 90% 20%, #A78BFA, transparent);
+  background-size: 200px 200px;
+  animation: starsMove 8s linear infinite;
+}
+
+@keyframes starsMove {
+  from { background-position: 0 0; }
+  to { background-position: 200px 200px; }
+ }
 </style>
 </head>
 <div id="welcome-screen">
