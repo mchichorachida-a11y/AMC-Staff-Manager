@@ -81,7 +81,47 @@ footer{text-align:center;padding:25px;color:#777}
 }
 </style>
 </head>
+<div id="welcome-screen">
+  <h1>WELCOME TO</h1>
+  <h2>AMC NETWORK</h2>
+  <p>Welcome to our community!</p>
+  <button onclick="enterWebsite()">
+    اضغط هنا للدخول إلى الموقع
+  </button>
+</div>
 
+<style>
+#welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #090D1B;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  gap: 20px;
+}
+#welcome-screen h1 {color: #FACC15;}
+#welcome-screen h2 {color: #A78BFA; font-size: 35px;}
+#welcome-screen button {
+  background: #FACC15;
+  color: #111827;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+</style>
+
+<script>
+function enterWebsite() {
+  document.getElementById("welcome-screen").style.display = "none";
+}
+</script>
 <body>
 <a href="https://discord.gg/vuKgvpTqG"
 target="_blank"
