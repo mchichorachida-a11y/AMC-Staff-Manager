@@ -79,6 +79,32 @@ footer{text-align:center;padding:25px;color:#777}
 @media(min-width:650px){
  .roles{grid-template-columns:repeat(4,1fr)}
 }
+ #welcome-screen {
+  animation: welcomeFade 1s ease;
+}
+
+#welcome-screen h2 {
+  animation: titleGlow 2s infinite alternate;
+}
+
+#welcome-screen button {
+  animation: buttonPulse 1.5s infinite;
+}
+
+@keyframes welcomeFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes titleGlow {
+  from { text-shadow: 0 0 5px #A78BFA; }
+  to { text-shadow: 0 0 25px #FACC15; }
+}
+
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+ }
 </style>
 </head>
 <div id="welcome-screen">
